@@ -1,3 +1,6 @@
+console.log("EXPENSE JS LOADED");
+
+
 const formContainer = document.getElementById("formContainer");
 const PlusBtn = document.getElementById("plusBtn");
 const addBtn = document.getElementById("addBtn");
@@ -93,66 +96,71 @@ li.append(left, amount, editBtn, deleteBtn);
 
 async function loadData() {
   try {
-    const response = await axios.get(
-      `${BASE_URL}?filter=${currentFilter}&date=${currentDate.getTime()}`
-    );
-    const data = response.data;
-    const filteredData = (data.transactions || []).filter(item =>
-  item.title.toLowerCase().includes(searchQuery) ||
-  item.category.toLowerCase().includes(searchQuery)
+    
+    const token = localStorage.getItem("token");
+
+console.log("TOKEN:", token);
+
+const response = await axios.get(
+  `${BASE_URL}?filter=${currentFilter}&date=${currentDate.getTime()}`,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
 );
 
-showSuggestions(filteredData, searchQuery);
+    const data = response.data || {};
+    const transactions = data.transactions || [];
+
+    const query = (searchQuery || "").toLowerCase();
+
+    // single filtered list
+    const filteredTransactions = query
+      ? transactions.filter(item => {
+          const title = (item.title || "").toLowerCase();
+          const category = (item.category || "").toLowerCase();
+          return title.includes(query) || category.includes(query);
+        })
+      : transactions;
+
+    // suggestions
+    showSuggestions(filteredTransactions, query);
+
+    // reset UI
     ulIncome.innerHTML = "";
     ulExpense.innerHTML = "";
 
-    let totalIncome = data.totalIncome || 0;
-let totalExpense = data.totalExpense || 0;
-
-  if (data.transactions && data.transactions.length > 0) {
-  data.transactions.forEach(item => {
-
-    const matchesSearch =
-      item.title.toLowerCase().includes(searchQuery) ||
-      item.category.toLowerCase().includes(searchQuery);
-
-    if (
-      currentFilter === "daily" &&
-      (!searchQuery || matchesSearch)
-    ) {
-      createList(item);
+    // render list
+    if (currentFilter === "daily") {
+      filteredTransactions.forEach(item => createList(item));
     }
 
-  });
-}
-    
-  if (
-  currentFilter === "daily" &&
-  searchQuery && 
-  data.transactions.filter(item =>
-    item.title.toLowerCase().includes(searchQuery) ||
-    item.category.toLowerCase().includes(searchQuery)
-  ).length === 0
-) {
-  ulIncome.innerHTML = "<p>No matching income</p>";
-  ulExpense.innerHTML = "<p>No matching expense</p>";
-}
-    
- if (currentFilter === "daily") {
-  incomeContainer.style.display = "block";
-  expenseContainer.style.display = "block";
-} else {
-  incomeContainer.style.display = "none";
-  expenseContainer.style.display = "none";
+    // no match UI
+    if (currentFilter === "daily" && query && filteredTransactions.length === 0) {
+      ulIncome.innerHTML = "<p>No matching income</p>";
+      ulExpense.innerHTML = "<p>No matching expense</p>";
+    }
 
-  
-  ulIncome.innerHTML = "";
-  ulExpense.innerHTML = "";
-}
-    document.getElementById("totalIncome").textContent = totalIncome.toFixed(2);
-    document.getElementById("totalExpense").textContent = totalExpense.toFixed(2);
+    // toggle containers
+    const showDaily = currentFilter === "daily";
+    incomeContainer.style.display = showDaily ? "block" : "none";
+    expenseContainer.style.display = showDaily ? "block" : "none";
+
+    if (!showDaily) {
+      ulIncome.innerHTML = "";
+      ulExpense.innerHTML = "";
+    }
+
+    // totals
+    document.getElementById("totalIncome").textContent =
+      (data.totalIncome || 0).toFixed(2);
+
+    document.getElementById("totalExpense").textContent =
+      (data.totalExpense || 0).toFixed(2);
+
     document.getElementById("balance").textContent =
-      (totalIncome - totalExpense).toFixed(2);
+      ((data.totalIncome || 0) - (data.totalExpense || 0)).toFixed(2);
 
   } catch (error) {
     console.log(error);
@@ -160,12 +168,11 @@ let totalExpense = data.totalExpense || 0;
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  const isLoggedIn = localStorage.getItem("loggedIn");
-
-  if (isLoggedIn !== "true") {
-    window.location.href = "login.html";
-    return;
-  }
+    const token = localStorage.getItem("token");
+  if (!token) {
+  window.location.href = "login.html";
+  return;
+}
 
   updateDateUI();
   loadData();
@@ -174,7 +181,18 @@ window.addEventListener("DOMContentLoaded", () => {
 async function add(obj) {
   try {
     formContainer.style.display = "none";
-    await axios.post(`${BASE_URL}/add`, obj);
+   const token = localStorage.getItem("token");
+
+await axios.post(
+  `${BASE_URL}/add`,
+  obj,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+
+    }
+  }
+);
     await loadData();
   } catch (error) {
     console.log(error);
@@ -182,8 +200,14 @@ async function add(obj) {
 }
 async function update(obj) {
   try {
+      const token = localStorage.getItem("token");
     formContainer.style.display = "none";
-    await axios.put(`${BASE_URL}/update/${editId}`, obj);
+    await axios.put(`${BASE_URL}/update/${editId}`, obj, {
+  headers: {
+    Authorization:`Bearer ${token}`
+
+  }
+});
     await loadData(); 
     form.expenseIncome.disabled = false;
     editId = null;
@@ -219,9 +243,16 @@ document.body.addEventListener("click", async (e) => {
   if (!li) return;
   const id = li.dataset.id;
 
+    const token = localStorage.getItem("token");
+
   if (e.target.classList.contains("deleteBtn")) {
   try {
-  await axios.delete(`${BASE_URL}/delete/${id}`);
+  await axios.delete(`${BASE_URL}/delete/${id}`, {
+  headers: {
+    Authorization:`Bearer ${token}`
+
+  }
+});
   await loadData();
 } catch (error) {
   console.log(error);
@@ -307,12 +338,9 @@ rightBtn.addEventListener("click", () => {
 });
 
 function showSuggestions(data, query) {
-  suggestionsBox.innerHTML = "";
+   if (!query) return;
 
-if (!query) {
   suggestionsBox.innerHTML = "";
-  return;
-}
 
   const suggestions = new Set();
 
