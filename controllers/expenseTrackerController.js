@@ -8,7 +8,8 @@ const addlist=async(req,res)=>{
             typeSelect,
             category,
             title,
-            amount
+            amount,
+            userId: req.user.id
         })
         res.status(201).json(data)
     } catch (error) {
@@ -23,7 +24,9 @@ const getlist = async (req, res) => {
   try {
     const { filter, date } = req.query;
 
-    let whereClause = {};
+    let whereClause = {
+  userId: req.user.id
+};
 
     if (date && filter) {
       const selectedDate = new Date(Number(date));
