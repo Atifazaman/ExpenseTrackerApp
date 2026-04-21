@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyDailyExpenses</title>
+    <link rel="stylesheet" href="/public/CSS/expenseTracker.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Nav-Container -->
+
+    <div class="navContainer">
+      <div class="logoContainer">
+        <img src="/public/ExpenseTrackerLogo.png" alt="error" class="logoImg" />
+        <div class="appDetailsBox">
+          <h1 class="appName">MyDailyExpenses</h1>
+        </div>
+      </div>
+      <div class="searchContainer">
+        <input type="text" id="searchInput" />
+        <div id="suggestionsBox" class="suggestionsBox"></div>
+        <button id="searchBtn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Date-Container -->
+  
+     
+    <div class="dateContainer">
+      <select name="dailymontlyyearly" id="filterType">
+        <option value="daily">Daily</option>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+      </select>
+  
+      <div class="date">
+        <button id="leftBtnIcon" class="iconBtn">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="dateBox">
+          <div id="dateNumber">10</div>
+          <div id="monthYear">
+            <p>April</p>
+            <p>2026</p>
+          </div>
+        </div>
+        <button id="rightBtnIcon" class="iconBtn">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="totalBalance">
+        <h2>Balance:</h2>
+        <p id="balance">00.0</p>
+      </div>
+    </div>
+
+    <!-- Income-Expense-Container -->
+
+    <div class="incomeContainer">
+      <div class="incomeBar totalBar">
+        <div class="headName">Income</div>
+        <div class="totalIncome totalIncExp">
+          <h2>Total Income:</h2>
+          <p id="totalIncome" class="incExpAmount">00.0</p>
+        </div>
+      </div>
+
+      <div class="incomeDateList list">
+        <ul id="incomeList"></ul>
+      </div>
+    </div>
+
+    <div class="expenseContainer">
+      <div class="expenseBar totalBar">
+        <div class="headName">Expenses</div>
+        <div class="totalExpense totalIncExp">
+          <h2>Total Expenses:</h2>
+          <p id="totalExpense" class="incExpAmount">00.0</p>
+        </div>
+      </div>
+
+      <div class="expenseDateList list">
+        <ul id="expenseList"></ul>
+      </div>
+    </div>
+
+
+
+    <div class="addContainer">
+      <button id="plusBtn" class="iconBtn addBtnIcon">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+
+    <div id="formContainer">
+      <button id="formCloseBtn" class="iconBtn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <form action="" id="form">
+        <div class="formGroup">
+          <label for="expenseIncomeSelect">Choose:</label>
+          <select name="expenseIncome" id="expenseIncomeSelect" required>
+            <option value="">-- Select Type --</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+        </div>
+
+        <div class="formGroup">
+          <label for="categorySelect">Category:</label>
+          <select name="category" id="categorySelect" required>
+            <option value="">-- Select Category --</option>
+            <option value="food">🍔 Food</option>
+            <option value="salary">💰 Salary</option>
+            <option value="travel">✈️ Travel</option>
+            <option value="shopping">🛒 Shopping</option>
+            <option value="transport">🚗 Transport</option>
+            <option value="movies">🎬 Movies</option>
+            <option value="medicine">💊 Medicine</option>
+            <option value="electricity">💡 Electricity</option>
+            <option value="rent">🏠 Rent</option>
+            <option value="fuel">⛽ Fuel</option>
+          </select>
+        </div>
+
+        <div class="formGroup">
+          <label for="title">Description:</label>
+          <input type="text" name="title" id="title" required />
+        </div>
+
+        <div class="formGroup">
+          <label for="amountInput">Amount:</label>
+          <input
+            type="number"
+            name="amount"
+            id="amountInput"
+            min="0"
+            required
+          />
+        </div>
+
+        <button type="submit" id="addBtn">Add</button>
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/public/JS/expenseTracker.js"></script>
+  </body>
+</html>

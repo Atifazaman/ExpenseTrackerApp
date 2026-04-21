@@ -1,0 +1,528 @@
+*{
+    caret-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+html,body {
+  background-color: #F4F6F8;
+  overflow-x: hidden;
+}
+
+.iconBtn{
+    background-color: transparent;
+    border-style: none;
+    cursor: pointer;
+}
+/* Nav Container */
+.navContainer{
+display: flex;
+justify-content: space-between;
+align-items: center;
+height: 9vh;
+width: 100%;
+background: linear-gradient(90deg, #0F766E, #134E4A);
+ backdrop-filter: blur(10px);
+
+}
+.logoContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+    gap: 6px;
+    margin-left: 5vw;
+}
+.logoImg{
+    height:50px;
+    width: 50px;
+    object-fit: contain;
+    margin-right: 5px;
+}
+.appName{
+    font-size: 20px;
+}
+.searchContainer{
+    position: relative;
+    width: 300px;
+    margin-right: 12vw;
+}
+#searchInput{
+    height: 15px;
+    width: 70%;
+    padding: 0 45px 0 15px;
+    border: 1px solid #ccc;
+    border-style: none;
+    border-radius: 1rem;
+    border: 2px solid rgb(86, 161, 16);
+}
+#searchInput:focus {
+  outline: none;
+  border: 2px solid rgb(15, 172, 15);
+  box-shadow: 0 0 5px rgba(15, 172, 15, 0.5);
+}
+#searchBtn {
+    position: absolute;
+    top: 50%;
+    right: 8.5%;   
+    transform: translateY(-50%);
+    background-color: #0F766E;
+    height: 20px;
+    width: 30px;
+    border-radius: 47%;
+    border: none;
+    color: white;
+    font-size: .6rem;
+    cursor: pointer;
+}
+#searchBtn:hover{
+    background-color: #0f766dd4;
+}
+.suggestionsBox {
+  position: absolute;
+  top: 100%;
+  left: 10px;
+  width: 80%;
+  background: white;
+  border:none; 
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+/* each item */
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+/* hover effect */
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #eee;
+}
+
+/* Date Container */
+
+.dateContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F8F9FB;
+    color: #2D3436;
+    border-bottom: 2px solid #E0E0E0;
+    height: 5vh;
+    font-weight: 900;
+}
+#leftBtnIcon, #rightBtnIcon{
+    font-size: 15px;
+    color: #333;
+
+}
+#filterType{
+    width: 12%;
+    font-size: 13px;
+    text-align: center;
+    margin-left: 10%;
+    padding: .2rem;
+    border-radius: .5rem;
+    border: none;
+    background-color:#0F766E;
+    color: white;
+}
+#filterType:hover{
+    background-color:#0f766dde;
+}
+#filterType:focus{
+  outline: none;
+}
+.date{
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  margin-left: 10%;
+}
+.dateBox{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 15px;
+    text-align: center;
+}
+
+.totalBalance{
+  width: 47%;
+  text-align: center;
+  font-size: 12px;
+}
+#totalBalanceValue{
+    font-size: 14px;
+}
+
+/* Income-Expense-Container */
+
+.totalBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 7vh;
+}
+.incomeBar{
+    background-color: #aef5e9b6;
+  
+    border-left:6px solid #14B8A6;
+    color: #1E8449;
+}
+.expenseBar{
+  background-color: #f8dada;
+  border-left:6px solid #EF4444;
+  color: #922B21;
+}
+.headName{
+    font-size: 17px;
+    font-weight: bold;
+    margin-left: 70px;
+}
+.totalIncExp{
+    text-align: center;
+    margin-right: 15%;
+    font-size: 12px;
+}
+.incExpAmount{
+    font-size: 14px;
+    font-weight: 800;
+    margin-top: 3px;
+}
+
+
+/* addBtn */
+.addContainer{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.addBtnIcon{
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 40px;
+  height: 40px;
+  background-color: #0F766E;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 1000;
+}
+.addBtnIcon:hover{
+     background-color: #0f766dc1;
+}
+
+/* form-container */
+#formContainer{
+      position: fixed;   
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: none;  
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.5rem;
+    background-color: rgb(241, 225, 196);
+    height: 30vh;
+    width: 30vw;
+}
+#formCloseBtn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 13px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    color: white;
+    background-color: rgb(208, 16, 16);
+}
+#formCloseBtn:hover{
+    background-color: rgba(208, 16, 16, 0.635);
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+.formGroup{
+    width: 70%;
+    display: flex;
+}
+.formGroup label {
+    width: 110px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.formGroup select{
+    text-align: center;
+}
+.formGroup input{
+    padding-left: 10px;
+}
+form input,form select{
+    width: inherit;
+     font-size: 12px;
+     border-style: none;
+     border: 1px solid black;
+     height: 3vh;
+     border-radius: 0.5rem;
+     caret-color: black;
+}
+#addBtn{
+    margin-top: 10px;
+   background-color: rgb(11, 11, 200);
+   border-radius: 0.5rem;
+   width: 100px;
+   border: none;
+   height: 30px;
+   color: white;
+   font-size: 13px;
+   font-weight: 700;
+}
+#addBtn:hover{
+     background-color: rgba(5, 5, 216, 0.769);
+}
+
+
+/* List */
+.incomeLi{
+    background-color: #dcf1ecd4;
+    border-bottom:2px solid #0f766dc1;
+}
+.expenseLi{
+    background-color: #f7f1f1d6;
+    border-bottom:2px solid #922B21;
+}
+
+.list{
+min-height: 150px;
+}
+li{
+    display: grid;
+  grid-template-columns: 2fr 1fr auto auto;
+  text-align: center;
+  align-items: center;
+  gap: 10px;
+  padding: 5px ;
+}
+.left {
+  display: flex;
+  gap: 100px;
+  margin-left: 4vw;
+  min-width: 200px;
+}
+.amount {
+  width: 100px;
+  text-align: right;
+  font-weight: bold;
+}
+
+li button {
+  color: white;
+  border-radius: 0.5rem;
+  border-style: none;
+  height: 20px;
+  width: 4vw;
+  margin-left: 10px;
+}
+
+.deleteBtn{
+  background-color: #922B21;
+}
+.editBtn{
+    background-color: #0F766E;
+}
+
+
+@media (max-width: 800px) and (min-width: 200px){
+  .navContainer{
+   height: 5vh;
+   width: 100%;
+}
+.logoContainer{
+    font-weight: 400;
+    margin-left: 5vw;
+    width: 100px
+}
+.logoImg{
+    height:30px;
+    width: 30px;
+}
+.appName{
+    text-align: center;
+    font-size: 12px;
+}
+.searchContainer{
+    width: 20vw;
+    margin-right: 7vw;
+}
+#searchInput{
+    font-size: 8px;
+    height: 8px;
+    width: 70%;
+    padding: 0 25px 0 5px;
+    border: 1px solid #ccc;
+    border: 1px solid rgb(86, 161, 16);
+}
+#searchInput:focus{
+    outline: 1px solid rgb(15, 172, 15);
+}
+#searchBtn {
+    height: 10px;
+    width: 15px;
+    font-size: 5px;
+    right: -20px;
+    top: 11px;
+}
+.suggestion-item {
+font-size: 10px;
+  padding: 2px;
+}
+.suggestionDiv{
+    font-size:6px;
+}
+
+/* Date Container */
+
+.dateContainer{
+    height: 4vh;
+    font-weight: 600;
+}
+#leftBtnIcon, #rightBtnIcon{
+    font-size: 10px;
+}
+#filterType{
+    width: 20vw;
+    font-size: 10px;
+    margin-left: 2%;
+    padding:2px;
+}
+.dateBox{
+    font-size: 10px;
+}
+.totalBalance{
+  font-size: 8px;
+}
+#totalBalanceValue{
+    font-size: 10px;
+}
+
+/* Income-Expense-Container */
+
+.totalBar{
+    height: 7vh;
+}
+.incomeBar{
+    border-left:4px solid #14B8A6;
+}
+.expenseBar{
+  border-left:4px solid #EF4444;
+}
+.headName{
+    font-size: 10px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+.totalIncExp{
+    margin-right: 10px;
+    font-size: 7px;
+}
+.incExpAmount{
+    font-size: 10px;
+    font-weight: 800;
+    margin-top: 3px;
+}
+/* form responsive */
+#formContainer{ 
+    height: 25vh;
+    width: 80vw;
+}
+#formCloseBtn{
+    font-size: 8px;
+    width: 18px;
+    height: 18px;
+}
+form{
+    gap: 6px;
+}
+.formGroup{
+    width: 80%;
+}
+.formGroup input,
+.formGroup select{
+    width: 65%;
+}
+.formGroup label {
+  width: 70px;
+  font-size: 12px;
+  font-weight: 600;
+}
+form input,form select{
+     font-size: 7px;
+     border: 1px solid black;
+     height: 2vh;
+}
+#addBtn{
+   width: 30px;
+   height: 15px;
+   font-size: 7px;
+   font-weight: 500;
+}
+/* List */
+.incomeLi{
+    border-bottom:2px solid #0f766dc1;
+}
+.expenseLi{
+    border-bottom:2px solid #922B21;
+}
+.list{
+min-height: 120px;
+}
+li{
+  grid-template-columns: 2fr 1fr auto auto;
+  gap: 0px;
+  padding: 2px ;
+}
+.left {
+  gap: 20px;
+  font-size: 12px;
+  margin-left: 2vw;
+  min-width: 100px;
+}
+.amount {
+  min-width: 80px;
+  font-size: 10px;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+li button {
+  font-size: 7px;
+  height: 16px;
+  max-width: 100px;
+  min-width: 20px
+}
+
+
+}
